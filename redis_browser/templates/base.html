@@ -55,15 +55,13 @@
                 {#     <input type="password" class="input-small" placeholder="Parameters"> #}
                 {#     <button type="submit" class="btn">Go</button> #}
                 {# </form> #}
+                {% block data %}
                 <table class="table table-bordered table-striped table-condensed">
-                    {% block data %}
-                        {% if data %}
-                            {% for value in data %}
-                                <tr><td>{{ loop.index }}</td><td>{{ value }}</td></tr>
-                            {% endfor %}
-                        {% endif %}
-                    {% endblock %}
+                    {% for value in data %}
+                        <tr><td>{{ loop.index }}</td><td>{{ value }}</td></tr>
+                    {% endfor %}
                 </table>
+                {% endblock %}
             {% else %}
                 <h2 >&LeftArrow; Select a key!</h2>
             {% endif %}

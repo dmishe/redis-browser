@@ -5,6 +5,10 @@ from flask import Flask, render_template, request, g, redirect, url_for
 
 app = Flask(__name__)
 
+TYPE_TEMPLATES = {
+    'hash': 'types/hash.html'
+}
+
 @app.before_request
 def before_request():
     g.redis = Redis()
@@ -36,12 +40,12 @@ def index():
             'hash':   lambda x: g.redis.hgetall(x),
             'list':   lambda x: g.redis.lrange(x, 0, -1),
             'string': lambda x: [g.redis.get(x)],
-            'zset':   lambda x: g.redis.zrange(x, 0, -1),
+            'zset':   lambda x: g.redis.zrange(x, 0, -1, withscores=True),
             'set':    lambda x: g.redis.smembers(x)
             
         }[key_type](key)
         
-    return render_template('index.html', 
+    return render_template(TYPE_TEMPLATES.get(key_type, 'index.html'), 
         data=data,
         _key=key)
 

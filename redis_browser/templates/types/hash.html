@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block data %}
+<table class="table table-bordered table-striped table-condensed">
+    {% for key, value in data.items() %}
+        <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
