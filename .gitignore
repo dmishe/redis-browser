@@ -1,0 +1,9 @@
+.DS_Store
+.Python
+*.pyc
+redis_browser.egg-info
+build/
+dist/
+bin/
+lib/
+include/

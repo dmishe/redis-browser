@@ -1,0 +1,2 @@
+recursive-include redis_browser/templates *
+recursive-include redis_browser/static *

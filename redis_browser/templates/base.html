@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Redis Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container" style="width:auto">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand " href="#">Redis Browser</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+       <div class="row-fluid">
+         <div class="span3">
+           <div class="well sidebar-nav">
+             <ul class="nav nav-list">
+               {% for type, values in keys|dictsort %}
+               <li class="nav-header">{{ type|upper }}</li>
+                   {% for key in values|sort %}
+                   <li {{ 'class=active' if _key==key }}><a href="{{ url_for('index', k=key) }}">{{ key }}</a></li>
+                   {% endfor %}              
+               {% endfor %}
+             </ul>
+           </div><!--/.well -->
+         </div><!--/span-->
+         <div class="span9">
+            {% if data %}
+                <h3>{{ _key }}</h3>
+                {# <form class="well form-inline"> #}
+                {#     <input type="text" class="input-small" placeholder="Command"> #}
+                {#     <input type="password" class="input-small" placeholder="Parameters"> #}
+                {#     <button type="submit" class="btn">Go</button> #}
+                {# </form> #}
+                <table class="table table-bordered table-striped table-condensed">
+                    {% block data %}
+                        {% if data %}
+                            {% for value in data %}
+                                <tr><td>{{ loop.index }}</td><td>{{ value }}</td></tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock %}
+                </table>
+            {% else %}
+                <h2 >&LeftArrow; Select a key!</h2>
+            {% endif %}
+         </div><!--/span-->
+       </div><!--/row-->
+
+       <hr>
+
+       <footer>
+         <a href="https://github.com/dmishe/redis-browser">https://github.com/dmishe/redis-browser</a>
+       </footer>
+
+     </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
