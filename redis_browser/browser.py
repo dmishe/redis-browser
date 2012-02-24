@@ -1,6 +1,6 @@
 from collections import defaultdict
 from redis import Redis
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, g, redirect, url_for
 
 
 app = Flask(__name__)
@@ -26,18 +26,21 @@ def keys():
 def index():    
     data = None
     key = request.args.get('k')
+    
     if key:
         key_type = g.redis.type(key)
+        if key_type == 'none': # bogus key, possibly bad paramenter
+            return redirect(url_for('index'))
+            
         data = {
             'hash':   lambda x: g.redis.hgetall(x),
             'list':   lambda x: g.redis.lrange(x, 0, -1),
-            'string': lambda x: g.redis.get(x),
+            'string': lambda x: [g.redis.get(x)],
             'zset':   lambda x: g.redis.zrange(x, 0, -1),
             'set':    lambda x: g.redis.smembers(x)
             
         }[key_type](key)
         
-            
     return render_template('index.html', 
         data=data,
         _key=key)
