@@ -5,5 +5,6 @@ redis_browser.egg-info
 build/
 dist/
 bin/
+!redis_browser/bin
 lib/
 include/
