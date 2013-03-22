@@ -10,7 +10,7 @@ So far supports only default connection and only displays full data for each key
     
 ## Usage
 
-    $ redis-server.py 
+    $ redis-browser.py 
      * Running on http://127.0.0.1:5000/
 
 
