@@ -4,6 +4,13 @@ from redis import Redis
 from flask import Flask, render_template, request, g, redirect, url_for
 
 
+p = argparse.ArgumentParser(description='Redis Browser')
+p.add_argument('--host', default='localhost')
+p.add_argument('--port', type=int, default=6379)
+p.add_argument('--db', type=int, default=0)
+mainargs = p.parse_args()
+del p
+
 app = Flask(__name__)
 
 TYPE_TEMPLATES = {
@@ -52,9 +59,4 @@ def index():
                            data=data, _key=key)
 
 if __name__ == '__main__':
-    p = argparse.ArgumentParser(description='Redis Browser')
-    p.add_argument('--host', default='localhost')
-    p.add_argument('--port', type=int, default=6379)
-    p.add_argument('--db', type=int, default=0)
-    mainargs = p.parse_args()
     app.run(debug=True)
