@@ -40,8 +40,8 @@
              <ul class="nav nav-list">
                {% for type, values in keys|dictsort %}
                <li class="nav-header">{{ type|upper }}</li>
-                   {% for key in values|sort %}
-                   <li {{ 'class=active' if _key==key }}><a href="{{ url_for('index', k=key) }}">{{ key }}</a></li>
+                   {% for key,ttl in values|sort %}
+                   <li {{ 'class=active' if _key==key }}><a href="{{ url_for('index', k=key) }}">{{ key }} (ttl={{ ttl }})</a></li>
                    {% endfor %}              
                {% endfor %}
              </ul>

@@ -33,7 +33,7 @@ def teardown_request(exception):
 def keys():
     keys = defaultdict(list)
     for key in g.redis.keys():
-        keys[g.redis.type(key)].append(key)
+        keys[g.redis.type(key)].append((key, g.redis.ttl(key)))
 
     return dict(keys=keys)
 
@@ -42,7 +42,7 @@ def keys():
 def index():
     data = None
     key = request.args.get('k')
-    key_type = key and g.redis.type(key)  # don't call redis without a key
+    key_type = key and g.redis.type(key).decode('utf-8')  # don't call redis without a key
     if key:
         if key_type == 'none':  # bogus key, possibly bad paramenter
             return redirect(url_for('index'))
