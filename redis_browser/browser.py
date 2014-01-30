@@ -42,7 +42,7 @@ def keys():
 def index():
     data = None
     key = request.args.get('k')
-    key_type = key and g.redis.type(key)  # don't call redis without a key
+    key_type = key and g.redis.type(key).decode('utf-8')  # don't call redis without a key
     if key:
         if key_type == 'none':  # bogus key, possibly bad paramenter
             return redirect(url_for('index'))
