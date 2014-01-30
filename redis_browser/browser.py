@@ -33,7 +33,7 @@ def teardown_request(exception):
 def keys():
     keys = defaultdict(list)
     for key in g.redis.keys():
-        keys[g.redis.type(key)].append(key)
+        keys[g.redis.type(key)].append((key, g.redis.ttl(key)))
 
     return dict(keys=keys)
 
